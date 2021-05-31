@@ -43,7 +43,7 @@ public class HideBottomToolWindows extends AnAction {
     }
 
     @NotNull
-    private List<ToolWindow> getVisibleBottomWindows(@NotNull Project project) {
+    private List<ToolWindow>getVisibleBottomWindows(@NotNull Project project) {
         ToolWindowManager toolWindowManager = ToolWindowManager.getInstance(project);
         List<ToolWindow> bottomWindows = new ArrayList<>();
         for (String id : toolWindowManager.getToolWindowIds()) {

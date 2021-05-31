@@ -20,7 +20,7 @@ dependencies {
 intellij {
     version '2019.1'
 }
-patchPluginXml {
+patchPluginXml {З
     sinceBuild '191'
     untilBuild '221.*'
     changeNotes """
@@ -33,6 +33,6 @@ patchPluginXml {
         <dd>initial release</dd>
       </dl>"""
 }
-publishPlugin {
-    token intellijPublishToken
-}
+//publishPlugin {
+//    token intellijPublishToken
+//}

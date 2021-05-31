@@ -1,10 +1,10 @@
 <idea-plugin>
-    <id>ToolWindowsActions</id>
-    <name>Tool Windows Actions</name>
-    <vendor email="dirk.moebius@scoop-software.de" url="https://github.com/dmoebius/intellij-tool-windows-actions">Dirk Möbius</vendor>
-    <description><![CDATA[Adds one action to IntelliJ IDEA: 'Hide all bottom tool windows' (Ctrl+Esc)
+    <id>SidePanelSwitcher</id>
+    <name>Switch Auto Hide Mode by Shortcut</name>
+    <vendor email="qalisander@gmail.com" url="https://github.com/qalisander/SidePanelSwitcherIntlj">Alisander Qoshqosh</vendor>
+    <description><![CDATA[Switch tool windows auto hide mode of left/right/bottom/top tool window groups by shortcut
     <p>
-    This is a fork of the SimpleActions plugin by Etienne Studer, which is no longer maintained.
+    This is a fork of the https://github.com/dmoebius/intellij-tool-windows-actions
     </p>]]></description>
     <version>1.0.2</version>
     <idea-version since-build="191" until-build="221.*"/>
@@ -16,7 +16,7 @@
                 text="Hide Bottom Tool Windows"
                 description="Hides all bottom tool windows">
             <add-to-group group-id="WindowMenu" anchor="after" relative-to-action="ToolWindowsGroup"/>
-            <keyboard-shortcut first-keystroke="control ESCAPE" keymap="$default"/>
+            <keyboard-shortcut first-keystroke="control Q" keymap="$default"/>
         </action>
     </actions>
 </idea-plugin>

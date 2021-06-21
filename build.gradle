@@ -20,7 +20,7 @@ dependencies {
 intellij {
     version '2019.1'
 }
-patchPluginXml {З
+patchPluginXml {
     sinceBuild '191'
     untilBuild '221.*'
     changeNotes """

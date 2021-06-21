@@ -11,12 +11,19 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
     <actions>
-        <action id="ToolWindowsActions.HideBottomToolWindows"
-                class="de.dmoebius.intellij.actions.HideBottomToolWindows"
+        <action id="SidePanelSwitcher.SwitchBottomToolWindows"
+                class="de.dmoebius.intellij.actions.SwitchToolWindows"
                 text="Hide Bottom Tool Windows"
                 description="Hides all bottom tool windows">
             <add-to-group group-id="WindowMenu" anchor="after" relative-to-action="ToolWindowsGroup"/>
             <keyboard-shortcut first-keystroke="control Q" keymap="$default"/>
+        </action>
+        <action id="SidePanelSwitcher.SwitchBottom"
+                class="de.dmoebius.intellij.actions.SwitchBottom"
+                text="Hide Bottom Tool Windows"
+                description="Hides all bottom tool windows">
+            <add-to-group group-id="WindowMenu" anchor="after" relative-to-action="ToolWindowsGroup"/>
+            <keyboard-shortcut first-keystroke="shift space" keymap="$default"/>
         </action>
     </actions>
 </idea-plugin>

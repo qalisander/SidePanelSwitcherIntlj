@@ -14,8 +14,8 @@ import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
 
-public class HideBottomToolWindows extends AnAction {
-    private static final Logger LOG = Logger.getInstance("de.dmoebius.intellij.actions.HideBottomToolWindows");
+public class SwitchToolWindows extends AnAction {
+    private static final Logger LOG = Logger.getInstance("SidePanelSwitcher");
     private static final int MAX_RETRIES = 50;
 
     public void update(AnActionEvent event) {

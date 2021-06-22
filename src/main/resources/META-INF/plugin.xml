@@ -25,5 +25,19 @@
             <add-to-group group-id="WindowMenu" anchor="after" relative-to-action="ToolWindowsGroup"/>
             <keyboard-shortcut first-keystroke="shift space" keymap="$default"/>
         </action>
+        <action id="SidePanelSwitcher.SwitchLeft"
+                class="de.dmoebius.intellij.actions.SwitchLeft"
+                text="Hide Left Tool Windows"
+                description="Hides all left tool windows">
+            <add-to-group group-id="WindowMenu" anchor="after" relative-to-action="ToolWindowsGroup"/>
+            <keyboard-shortcut first-keystroke="shift escp" keymap="$default"/>
+        </action>
+        <action id="SidePanelSwitcher.SwitchRigth"
+                class="de.dmoebius.intellij.actions.SwitchRight"
+                text="Hide Right Tool Windows"
+                description="Hides all right tool windows">
+            <add-to-group group-id="WindowMenu" anchor="after" relative-to-action="ToolWindowsGroup"/>
+            <keyboard-shortcut first-keystroke="shift F1" keymap="$default"/>
+        </action>
     </actions>
 </idea-plugin>

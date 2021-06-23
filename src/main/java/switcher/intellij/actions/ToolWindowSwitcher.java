@@ -1,4 +1,4 @@
-package de.dmoebius.intellij.actions;
+package switcher.intellij.actions;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
@@ -10,6 +10,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+// NOTE: do not switch Undocked
+// NOTE: Dock Unpinned window by settings toggle.
+// NOTE: switch float window by settings toggle.
+// NOTE: add focus on window switch
+// NOTE: tool window actions like attaching floating window to border
 public class ToolWindowSwitcher {
     static public void switchWindow(ToolWindowAnchor anchor, AnActionEvent event) {
         Project project = (Project) event.getDataContext().getData("project");

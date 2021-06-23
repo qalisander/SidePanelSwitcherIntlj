@@ -1,4 +1,4 @@
-package de.dmoebius.intellij.actions;
+package switcher.intellij.actions;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;

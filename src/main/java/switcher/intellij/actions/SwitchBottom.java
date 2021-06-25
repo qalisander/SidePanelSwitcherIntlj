@@ -4,9 +4,9 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.wm.ToolWindowAnchor;
 
-public class SwitchBottom extends AnAction {
+public class SwitchBottom extends SwitchBase {
     @Override
     public void actionPerformed(AnActionEvent event) {
-        ToolWindowSwitcher.switchWindow(ToolWindowAnchor.BOTTOM, event);
+        switchWindow(ToolWindowAnchor.BOTTOM, event);
     }
 }

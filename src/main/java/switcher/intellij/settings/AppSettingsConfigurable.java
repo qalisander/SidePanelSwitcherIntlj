@@ -21,7 +21,7 @@ public class AppSettingsConfigurable implements Configurable {
   @Nls(capitalization = Nls.Capitalization.Title)
   @Override
   public String getDisplayName() {
-    return "Side Panel Switcher Settings";
+    return "Side Panel Switcher Filter";
   }
 
   @Override
@@ -39,7 +39,6 @@ public class AppSettingsConfigurable implements Configurable {
   @Override
   public boolean isModified() {
     AppSettingsState settings = AppSettingsState.getInstance();
-//    boolean modified = !mySettingsComponent.getUserNameText().equals(settings.userId);
     boolean modified = mySettingsComponent.getSwitchUndocked() != settings.switchUndocked;
     modified |= mySettingsComponent.getSwitchDockUnpinned() != settings.switchDockUnpinned;
     modified |= mySettingsComponent.getSwitchFloat() != settings.switchFloat;
@@ -49,7 +48,6 @@ public class AppSettingsConfigurable implements Configurable {
   @Override
   public void apply() {
     AppSettingsState settings = AppSettingsState.getInstance();
-//    settings.userId = mySettingsComponent.getUserNameText();
     settings.switchUndocked = mySettingsComponent.getSwitchUndocked();
     settings.switchDockUnpinned = mySettingsComponent.getSwitchDockUnpinned();
     settings.switchFloat = mySettingsComponent.getSwitchFloat();
@@ -58,7 +56,6 @@ public class AppSettingsConfigurable implements Configurable {
   @Override
   public void reset() {
     AppSettingsState settings = AppSettingsState.getInstance();
-//    mySettingsComponent.setUserNameText(settings.userId);
     mySettingsComponent.setSwitchUndocked(settings.switchUndocked);
     mySettingsComponent.setSwitchDockUnpinned(settings.switchDockUnpinned);
     mySettingsComponent.setSwitchFloat(settings.switchFloat);

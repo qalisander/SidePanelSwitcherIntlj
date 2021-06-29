@@ -21,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 )
 public class AppSettingsState implements PersistentStateComponent<AppSettingsState> {
 
-  public boolean switchUndocked = true;
+  public boolean switchUndocked = false;
   public boolean switchDockUnpinned = true;
   public boolean switchFloat = true;
 

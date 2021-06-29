@@ -7,6 +7,8 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowAnchor;
 import com.intellij.openapi.wm.ToolWindowManager;
+import com.intellij.openapi.wm.ToolWindowType;
+import switcher.intellij.settings.AppSettingsState;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,8 +27,9 @@ import java.util.stream.Collectors;
 
 public abstract class SwitchBase extends AnAction {
     protected static final Logger LOG = Logger.getInstance("SidePanelSwitcher");
+    protected ToolWindowAnchor anchor;
 
-    static public void switchWindow(ToolWindowAnchor anchor, AnActionEvent event) {
+    protected void switchWindow(AnActionEvent event) {
         Project project = (Project) event.getDataContext().getData("project");
         if (project == null)
             return;
@@ -35,8 +38,7 @@ public abstract class SwitchBase extends AnAction {
 
         List<ToolWindow> toolWindows = Arrays.stream(toolWindowManager.getToolWindowIds())
                 .map(toolWindowManager::getToolWindow)
-                .filter(Objects::nonNull)
-                .filter(tw -> tw.getAnchor() == anchor)
+                .filter(this::CanBeSwitched)
                 .collect(Collectors.toList());
 
         if (toolWindows.stream().anyMatch(ToolWindow::isVisible)) {
@@ -46,8 +48,7 @@ public abstract class SwitchBase extends AnAction {
                 }
                 toolWindow.hide(null);
             }
-        }
-        else {
+        } else {
             for (ToolWindow toolWindow : toolWindows) {
                 if (LOG.isDebugEnabled()) {
                     LOG.debug("Trying to show window: [" + toolWindow.getTitle() + "]");
@@ -55,5 +56,19 @@ public abstract class SwitchBase extends AnAction {
                 toolWindow.show(null);
             }
         }
+    }
+
+    private boolean CanBeSwitched(ToolWindow toolWindow) {
+        if (toolWindow == null || toolWindow.getAnchor() != anchor)
+            return false;
+
+        if (toolWindow.getType() == ToolWindowType.DOCKED && !toolWindow.isAutoHide())
+            return true;
+
+        AppSettingsState settings = AppSettingsState.getInstance();
+
+        return (settings.switchDockUnpinned && toolWindow.getType() == ToolWindowType.DOCKED && toolWindow.isAutoHide())
+                || (settings.switchUndocked && toolWindow.getType() == ToolWindowType.SLIDING)
+                || (settings.switchFloat && toolWindow.getType() == ToolWindowType.FLOATING);
     }
 }

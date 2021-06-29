@@ -16,13 +16,16 @@ import javax.swing.*;
 public class AppSettingsComponent {
 
   private final JPanel myMainPanel;
-  private final JBTextField myUserNameText = new JBTextField();
-  private final JBCheckBox myIdeaUserStatus = new JBCheckBox("Do you use IntelliJ IDEA? ");
+  private final JBCheckBox switchUndocked = new JBCheckBox("Switch undocked windows");
+  private final JBCheckBox switchDockUnpinned = new JBCheckBox("Switch dock unpinned windows");
+  private final JBCheckBox switchFloat = new JBCheckBox("Switch float windows");
 
   public AppSettingsComponent() {
     myMainPanel = FormBuilder.createFormBuilder()
-            .addLabeledComponent(new JBLabel("Enter user name: "), myUserNameText, 1, false)
-            .addComponent(myIdeaUserStatus, 1)
+            .addComponent(new JBLabel("Set tool windows filter options:"))
+            .addComponent(switchUndocked, 1) //TODO: sort out what is topInset
+            .addComponent(switchDockUnpinned, 1)
+            .addComponent(switchFloat, 1)
             .addComponentFillVertically(new JPanel(), 0)
             .getPanel();
   }
@@ -32,24 +35,32 @@ public class AppSettingsComponent {
   }
 
   public JComponent getPreferredFocusedComponent() {
-    return myUserNameText;
+    return switchUndocked;
   }
 
-  @NotNull
-  public String getUserNameText() {
-    return myUserNameText.getText();
+  // region get set
+  public boolean getSwitchUndocked() {
+    return switchUndocked.isSelected();
   }
 
-  public void setUserNameText(@NotNull String newText) {
-    myUserNameText.setText(newText);
+  public void setSwitchUndocked(boolean status) {
+    switchUndocked.setSelected(status);
   }
 
-  public boolean getIdeaUserStatus() {
-    return myIdeaUserStatus.isSelected();
+  public boolean getSwitchDockUnpinned() {
+    return switchDockUnpinned.isSelected();
   }
 
-  public void setIdeaUserStatus(boolean newStatus) {
-    myIdeaUserStatus.setSelected(newStatus);
+  public void setSwitchDockUnpinned(boolean status) {
+    switchDockUnpinned.setSelected(status);
   }
 
+  public boolean getSwitchFloat() {
+    return switchFloat.isSelected();
+  }
+
+  public void setSwitchFloat(boolean status) {
+    switchFloat.setSelected(status);
+  }
+  // endregion
 }

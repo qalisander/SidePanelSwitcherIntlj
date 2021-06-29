@@ -13,18 +13,15 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-// NOTE: do not switch Undocked
-// NOTE: Dock Unpinned window by settings toggle.
-// NOTE: switch float window by settings toggle.
-// NOTE: add focus on window switch in settins
-// NOTE: save last shown, prlly focus on last shown
+// TODO: Save last opened tool windows, and add toggle in settings
+// TODO: hide tool windows when start typing
+// TODO: add focus on switched windows add toggle in settings, save last visible in list (What's with folding tw in ui?)
+
+// TODO: move and window to next group and move all to group
 
 // NOTE: tool window actions like attaching floating window to border
 // https://alvinalexander.com/java/java-mouse-current-position-location-coordinates/
 // trigger on click and then triger (Window.setLocation()
-// NOTE: move and window to next group and move all to group
-// May be:
-// NOTE: hide tool windows when start typing
 
 public abstract class SwitchBase extends AnAction {
     protected static final Logger LOG = Logger.getInstance("SidePanelSwitcher");

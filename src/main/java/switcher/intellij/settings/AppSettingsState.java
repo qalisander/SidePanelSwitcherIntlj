@@ -21,8 +21,9 @@ import org.jetbrains.annotations.Nullable;
 )
 public class AppSettingsState implements PersistentStateComponent<AppSettingsState> {
 
-  public String userId = "John Q. Public";
-  public boolean ideaStatus = false;
+  public boolean switchUndocked = true;
+  public boolean switchDockUnpinned = true;
+  public boolean switchFloat = true;
 
   public static AppSettingsState getInstance() {
     return ApplicationManager.getApplication().getService(AppSettingsState.class);

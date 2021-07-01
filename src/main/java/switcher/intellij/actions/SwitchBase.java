@@ -15,9 +15,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// TODO: Save last opened tool windows, and add toggle in settings
 // TODO: hide tool windows when start typing
 // TODO: add focus on switched windows add toggle in settings, save last visible in list (What's with folding tw in ui?)
+// TODO: Add toggle in settings: Whether to remember last opened tool windows
 
 // TODO: move and window to next group and move all to group
 
@@ -42,10 +42,10 @@ public abstract class SwitchBase extends AnAction {
                 .collect(Collectors.toList());
 
         if (toolWindows.stream().anyMatch(ToolWindow::isVisible)) {
-            ArrayList<String> lastShownToolWindowIds = new ArrayList<String>();
+            ArrayList<String> lastShownToolWindowIds = new ArrayList<>();
             for (ToolWindow toolWindow : toolWindows) { // TODO: iterate on stream of visible windows
                 if (LOG.isDebugEnabled()) {
-                    LOG.debug("Trying to hide window: [" + toolWindow.getTitle() + "]");// TODO: prlly use get id
+                    LOG.debug("Trying to hide window: [" + toolWindow.getId() + "]; on the: [" + anchor.toString() + "] side");
                 }
 
                 if (toolWindow.isVisible()){
@@ -56,12 +56,12 @@ public abstract class SwitchBase extends AnAction {
             }
             setLastShownToolWindows(lastShownToolWindowIds);
         } else {
+            List<String> lastShownToolWindowIds = getLastShownToolWindows();
+
             for (ToolWindow toolWindow : toolWindows) {
                 if (LOG.isDebugEnabled()) {
-                    LOG.debug("Trying to show window: [" + toolWindow.getTitle() + "]");
+                    LOG.debug("Trying to show window: [" + toolWindow.getId() + "]; on the: [" + anchor.toString() + "] side");
                 }
-
-                List<String> lastShownToolWindowIds = getLastShownToolWindows();
 
                 if (lastShownToolWindowIds == null
                         || lastShownToolWindowIds.stream().anyMatch(str -> str.equals(toolWindow.getId()))) {

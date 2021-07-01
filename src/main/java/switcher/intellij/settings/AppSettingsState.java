@@ -6,9 +6,16 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
+import com.intellij.openapi.wm.ToolWindowAnchor;
 import com.intellij.util.xmlb.XmlSerializerUtil;
+import com.intellij.util.xmlb.annotations.Transient;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Supports storing the application settings in a persistent way.
@@ -16,14 +23,17 @@ import org.jetbrains.annotations.Nullable;
  * these persistent application settings are stored.
  */
 @State(
-        name = "org.intellij.sdk.settings.AppSettingsState",
-        storages = {@Storage("SdkSettingsPlugin.xml")}
+        name = "SidePanelSwitcher", // TODO: Rename?
+        storages = {@Storage("SidePanelSwitcher.xml")}
 )
 public class AppSettingsState implements PersistentStateComponent<AppSettingsState> {
 
   public boolean switchUndocked = false;
   public boolean switchDockUnpinned = true;
   public boolean switchFloat = true;
+
+  // NOTE: Only POJO serializes: https://intellij-support.jetbrains.com/hc/en-us/community/posts/360000483244-XmlSerializerUtil-Unable-to-serialize-state-for-PersistentStateComponent.
+  public Map<String, List<String>> lastShownToolWindows = new HashMap<>();
 
   public static AppSettingsState getInstance() {
     return ApplicationManager.getApplication().getService(AppSettingsState.class);
@@ -39,5 +49,4 @@ public class AppSettingsState implements PersistentStateComponent<AppSettingsSta
   public void loadState(@NotNull AppSettingsState state) {
     XmlSerializerUtil.copyBean(state, this);
   }
-
 }

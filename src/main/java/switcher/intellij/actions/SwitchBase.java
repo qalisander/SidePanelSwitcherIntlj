@@ -10,9 +10,9 @@ import com.intellij.openapi.wm.ToolWindowManager;
 import com.intellij.openapi.wm.ToolWindowType;
 import switcher.intellij.settings.AppSettingsState;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 // TODO: Save last opened tool windows, and add toggle in settings
@@ -42,18 +42,31 @@ public abstract class SwitchBase extends AnAction {
                 .collect(Collectors.toList());
 
         if (toolWindows.stream().anyMatch(ToolWindow::isVisible)) {
-            for (ToolWindow toolWindow : toolWindows) {
+            ArrayList<String> lastShownToolWindowIds = new ArrayList<String>();
+            for (ToolWindow toolWindow : toolWindows) { // TODO: iterate on stream of visible windows
                 if (LOG.isDebugEnabled()) {
-                    LOG.debug("Trying to hide window: [" + toolWindow.getTitle() + "]");
+                    LOG.debug("Trying to hide window: [" + toolWindow.getTitle() + "]");// TODO: prlly use get id
                 }
+
+                if (toolWindow.isVisible()){
+                    lastShownToolWindowIds.add(toolWindow.getId());
+                }
+
                 toolWindow.hide(null);
             }
+            setLastShownToolWindows(lastShownToolWindowIds);
         } else {
             for (ToolWindow toolWindow : toolWindows) {
                 if (LOG.isDebugEnabled()) {
                     LOG.debug("Trying to show window: [" + toolWindow.getTitle() + "]");
                 }
-                toolWindow.show(null);
+
+                List<String> lastShownToolWindowIds = getLastShownToolWindows();
+
+                if (lastShownToolWindowIds == null
+                        || lastShownToolWindowIds.stream().anyMatch(str -> str.equals(toolWindow.getId()))) {
+                    toolWindow.show(null);
+                }
             }
         }
     }
@@ -70,5 +83,13 @@ public abstract class SwitchBase extends AnAction {
         return (settings.switchDockUnpinned && toolWindow.getType() == ToolWindowType.DOCKED && toolWindow.isAutoHide())
                 || (settings.switchUndocked && toolWindow.getType() == ToolWindowType.SLIDING)
                 || (settings.switchFloat && toolWindow.getType() == ToolWindowType.FLOATING);
+    }
+
+    private List<String> getLastShownToolWindows() {
+        return AppSettingsState.getInstance().lastShownToolWindows.get(anchor.toString());
+    }
+
+    private void setLastShownToolWindows(List<String> toolWindowIds) {
+        AppSettingsState.getInstance().lastShownToolWindows.put(anchor.toString(), toolWindowIds);
     }
 }

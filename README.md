@@ -30,3 +30,6 @@ Don't commit this file!
 
 See [Publishing Plugins with Gradle](https://www.jetbrains.org/intellij/sdk/docs/tutorials/build_system/deployment.html#providing-your-hub-permanent-token-to-gradle)
 for more informations.
+
+### Features
+- Persistent saving of last shown tool windows

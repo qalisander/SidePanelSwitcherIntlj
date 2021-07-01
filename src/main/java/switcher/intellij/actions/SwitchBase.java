@@ -14,9 +14,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// TODO: hide tool windows when start typing
+
 // TODO: add focus on switched windows add toggle in settings, save last visible in list (What's with folding tw in ui?)
-// TODO: Add toggle in settings: Whether to remember last opened tool windows
+//  [*]left [*]right [*]bottom tool windows
+// TODO: Add toggle in settings: Whether to remember last opened tool windows; None - show all every time
+// BUG: When pressing button for a while ui freezing. (especially floating windows)
 
 // NOTE: tool window actions like attaching floating window to border
 // https://alvinalexander.com/java/java-mouse-current-position-location-coordinates/
@@ -26,6 +28,7 @@ public abstract class SwitchBase extends AnAction {
     protected static final Logger LOG = Logger.getInstance("SidePanelSwitcher");
     protected ToolWindowAnchor anchor;
 
+    // TODO: rename to action performed
     protected void switchWindow(AnActionEvent event) {
         Project project = (Project) event.getDataContext().getData("project");
         if (project == null)
@@ -38,6 +41,7 @@ public abstract class SwitchBase extends AnAction {
                 .filter(this::CanBeSwitched)
                 .collect(Collectors.toList());
 
+        // TODO: Add new methods hide and show
         if (toolWindows.stream().anyMatch(ToolWindow::isVisible)) {
             ArrayList<String> lastShownToolWindowIds = new ArrayList<>();
             for (ToolWindow toolWindow : toolWindows) { // TODO: iterate on stream of visible windows

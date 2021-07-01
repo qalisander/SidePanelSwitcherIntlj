@@ -11,31 +11,24 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
     <actions>
-        <action id="SidePanelSwitcher.SwitchBottomToolWindows"
-                class="switcher.intellij.actions.SwitchToolWindows"
-                text="Hide Bottom Tool Windows"
-                description="Hides all bottom tool windows">
-            <add-to-group group-id="WindowMenu" anchor="after" relative-to-action="ToolWindowsGroup"/>
-            <keyboard-shortcut first-keystroke="control Q" keymap="$default"/>
-        </action>
         <action id="SidePanelSwitcher.SwitchBottom"
                 class="switcher.intellij.actions.SwitchBottom"
-                text="Hide Bottom Tool Windows"
-                description="Hides all bottom tool windows">
+                text="Switch Bottom Tool Windows"
+                description="Switches all bottom tool windows">
             <add-to-group group-id="WindowMenu" anchor="after" relative-to-action="ToolWindowsGroup"/>
             <keyboard-shortcut first-keystroke="shift space" keymap="$default"/>
         </action>
         <action id="SidePanelSwitcher.SwitchLeft"
                 class="switcher.intellij.actions.SwitchLeft"
-                text="Hide Left Tool Windows"
-                description="Hides all left tool windows">
+                text="Switch Left Tool Windows"
+                description="Switches all left tool windows">
             <add-to-group group-id="WindowMenu" anchor="after" relative-to-action="ToolWindowsGroup"/>
             <keyboard-shortcut first-keystroke="shift escape" keymap="$default"/>
         </action>
         <action id="SidePanelSwitcher.SwitchRight"
                 class="switcher.intellij.actions.SwitchRight"
-                text="Hide Right Tool Windows"
-                description="Hides all right tool windows">
+                text="Switch Right Tool Windows"
+                description="Switches all right tool windows">
             <add-to-group group-id="WindowMenu" anchor="after" relative-to-action="ToolWindowsGroup"/>
             <keyboard-shortcut first-keystroke="shift F1" keymap="$default"/>
         </action>

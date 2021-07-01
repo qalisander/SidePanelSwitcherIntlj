@@ -1,4 +1,5 @@
 <idea-plugin>
+    <!--NOTE: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html-->
     <id>SidePanelSwitcher</id>
     <name>Switch Auto Hide Mode by Shortcut</name>
     <vendor email="qalisander@gmail.com" url="https://github.com/qalisander/SidePanelSwitcherIntlj">Alisander Qoshqosh</vendor>
@@ -11,6 +12,7 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
     <actions>
+        <!--NOTE: https://plugins.jetbrains.com/docs/intellij/basic-action-system.html#registering-actions-in-pluginxml-->
         <action id="SidePanelSwitcher.SwitchBottom"
                 class="switcher.intellij.actions.SwitchBottom"
                 text="Switch Bottom Tool Windows"

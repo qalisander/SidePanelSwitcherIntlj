@@ -9,10 +9,13 @@ import com.intellij.openapi.wm.ToolWindowAnchor;
 import com.intellij.openapi.wm.ToolWindowManager;
 import com.intellij.openapi.wm.ToolWindowType;
 import switcher.intellij.settings.AppSettingsState;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 // TODO: add focus on switched windows add toggle in settings, save last visible in list (What's with folding tw in ui?)
@@ -41,21 +44,20 @@ public abstract class SwitchBase extends AnAction {
                 .filter(this::CanBeSwitched)
                 .collect(Collectors.toList());
 
-        // TODO: Add new methods hide and show
-        if (toolWindows.stream().anyMatch(ToolWindow::isVisible)) {
-            ArrayList<String> lastShownToolWindowIds = new ArrayList<>();
-            for (ToolWindow toolWindow : toolWindows) { // TODO: iterate on stream of visible windows
-                if (LOG.isDebugEnabled()) {
-                    LOG.debug("Trying to hide window: [" + toolWindow.getId() + "]; on the: [" + anchor.toString() + "] side");
-                }
+        List<String> visibleToolWindowIds = toolWindows.stream()
+                .filter(ToolWindow::isVisible)
+                .map(toolWindow -> {
+                    if (LOG.isDebugEnabled()) {
+                        LOG.debug("Trying to hide window: [" + toolWindow.getId() + "]; on the: [" + anchor.toString() + "] side");
+                    }
 
-                if (toolWindow.isVisible()){
-                    lastShownToolWindowIds.add(toolWindow.getId());
-                }
+                    toolWindow.hide(null);
+                    return toolWindow.getId();
+                })
+                .collect(Collectors.toList());
 
-                toolWindow.hide(null);
-            }
-            setLastShownToolWindows(lastShownToolWindowIds);
+        if (visibleToolWindowIds.size() > 0) {
+            setLastShownToolWindows(visibleToolWindowIds);
         } else {
             List<String> lastShownToolWindowIds = getLastShownToolWindows();
 
@@ -65,6 +67,7 @@ public abstract class SwitchBase extends AnAction {
                 }
 
                 if (lastShownToolWindowIds == null
+                        || lastShownToolWindowIds.size() == 0
                         || lastShownToolWindowIds.stream().anyMatch(str -> str.equals(toolWindow.getId()))) {
                     toolWindow.show(null);
                 }

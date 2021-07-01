@@ -9,7 +9,6 @@ import com.intellij.openapi.wm.ToolWindowAnchor;
 import com.intellij.openapi.wm.ToolWindowManager;
 import com.intellij.openapi.wm.ToolWindowType;
 import switcher.intellij.settings.AppSettingsState;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,8 +17,6 @@ import java.util.stream.Collectors;
 // TODO: hide tool windows when start typing
 // TODO: add focus on switched windows add toggle in settings, save last visible in list (What's with folding tw in ui?)
 // TODO: Add toggle in settings: Whether to remember last opened tool windows
-
-// TODO: move and window to next group and move all to group
 
 // NOTE: tool window actions like attaching floating window to border
 // https://alvinalexander.com/java/java-mouse-current-position-location-coordinates/

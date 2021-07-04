@@ -26,6 +26,7 @@ public class AppSettingsState implements PersistentStateComponent<AppSettingsSta
   public boolean switchDockUnpinned = true;
   public boolean switchFloat = true;
   public boolean focusOnSwitched = true;
+  public boolean rememberLastOpened = true;
 
   // NOTE: Only POJO serializes: https://intellij-support.jetbrains.com/hc/en-us/community/posts/360000483244-XmlSerializerUtil-Unable-to-serialize-state-for-PersistentStateComponent.
   public Map<String, List<String>> lastShownToolWindows = new HashMap<>();

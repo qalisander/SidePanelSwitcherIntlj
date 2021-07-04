@@ -15,6 +15,7 @@ public class AppSettingsComponent {
   private final JBCheckBox switchDockUnpinned = new JBCheckBox("Switch dock unpinned windows");
   private final JBCheckBox switchFloat = new JBCheckBox("Switch float windows");
   private final JBCheckBox focusOnSwitched = new JBCheckBox("Focus on shown windows (one that has been active last time)");
+  private final JBCheckBox rememberLastOpened = new JBCheckBox("Remember last opened tool windows");
 
   public AppSettingsComponent() {
     myMainPanel = FormBuilder.createFormBuilder()
@@ -24,6 +25,7 @@ public class AppSettingsComponent {
             .addComponent(switchFloat, 1)
             .addComponent(new JBLabel("Other options:"))
             .addComponent(focusOnSwitched, 1)
+            .addComponent(rememberLastOpened, 1)
             .addComponentFillVertically(new JPanel(), 0)
             .getPanel();
   }
@@ -67,6 +69,14 @@ public class AppSettingsComponent {
 
   public void setFocusOnSwitched(boolean status) {
     focusOnSwitched.setSelected(status);
+  }
+
+  public boolean getRememberLastOpened() {
+    return rememberLastOpened.isSelected();
+  }
+
+  public void setRememberLastOpened(boolean status) {
+    rememberLastOpened.setSelected(status);
   }
   // endregion
 }

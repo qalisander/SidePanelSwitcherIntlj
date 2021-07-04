@@ -13,9 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// TODO: Add toggle in settings: Whether to remember last opened tool windows; None - show all every time
 // BUG: When pressing switch shortcut for a while ui freezing. (especially floating windows)
-
 // NOTE: tool window actions like attaching floating window to border
 // https://alvinalexander.com/java/java-mouse-current-position-location-coordinates/
 // trigger on click and then triger (Window.setLocation()
@@ -37,6 +35,7 @@ public abstract class SwitchBase extends AnAction {
                 .filter(this::CanBeSwitched)
                 .collect(Collectors.toList());
 
+        //TODO: Try hide method
         List<String> visibleToolWindowIds = toolWindows.stream()
                 .filter(ToolWindow::isVisible)
                 .map(toolWindow -> {
@@ -56,6 +55,7 @@ public abstract class SwitchBase extends AnAction {
         if (visibleToolWindowIds.size() > 0) {
             setLastShownToolWindows(visibleToolWindowIds);
         } else {
+            //TODO: Show method
             List<String> lastShownToolWindowIds = getLastShownToolWindows();
             String lastFocusedToolWindowId = removeLastFocusedToolWindow();
 
@@ -64,7 +64,8 @@ public abstract class SwitchBase extends AnAction {
                     LOG.debug("Trying to show window: [" + toolWindow.getId() + "]; on the: [" + anchor.toString() + "] side");
                 }
 
-                if (lastShownToolWindowIds == null
+                if (!AppSettingsState.getInstance().rememberLastOpened
+                        || lastShownToolWindowIds == null
                         || lastShownToolWindowIds.size() == 0
                         || lastShownToolWindowIds.stream().anyMatch(str -> str.equals(toolWindow.getId()))) {
                     toolWindow.show(null);

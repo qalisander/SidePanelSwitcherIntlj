@@ -18,7 +18,7 @@ public class AppSettingsConfigurable implements Configurable {
   @Nls(capitalization = Nls.Capitalization.Title)
   @Override
   public String getDisplayName() {
-    return "Side Panel Switcher Filter";
+    return "Side Panel Switcher Settings";
   }
 
   @Override
@@ -40,6 +40,7 @@ public class AppSettingsConfigurable implements Configurable {
     modified |= mySettingsComponent.getSwitchDockUnpinned() != settings.switchDockUnpinned;
     modified |= mySettingsComponent.getSwitchFloat() != settings.switchFloat;
     modified |= mySettingsComponent.getFocusOnSwitched() != settings.focusOnSwitched;
+    modified |= mySettingsComponent.getRememberLastOpened() != settings.rememberLastOpened;
     return modified;
   }
 
@@ -50,6 +51,7 @@ public class AppSettingsConfigurable implements Configurable {
     settings.switchDockUnpinned = mySettingsComponent.getSwitchDockUnpinned();
     settings.switchFloat = mySettingsComponent.getSwitchFloat();
     settings.focusOnSwitched = mySettingsComponent.getFocusOnSwitched();
+    settings.rememberLastOpened = mySettingsComponent.getRememberLastOpened();
   }
 
   @Override
@@ -59,6 +61,7 @@ public class AppSettingsConfigurable implements Configurable {
     mySettingsComponent.setSwitchDockUnpinned(settings.switchDockUnpinned);
     mySettingsComponent.setSwitchFloat(settings.switchFloat);
     mySettingsComponent.setFocusOnSwitched(settings.focusOnSwitched);
+    mySettingsComponent.setRememberLastOpened(settings.rememberLastOpened);
   }
 
   @Override

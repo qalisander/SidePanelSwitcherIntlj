@@ -14,6 +14,7 @@ public class AppSettingsComponent {
   private final JBCheckBox switchUndocked = new JBCheckBox("Switch undocked windows");
   private final JBCheckBox switchDockUnpinned = new JBCheckBox("Switch dock unpinned windows");
   private final JBCheckBox switchFloat = new JBCheckBox("Switch float windows");
+  private final JBCheckBox focusOnSwitched = new JBCheckBox("Focus on shown windows (last focused window as far as possible)");
 
   public AppSettingsComponent() {
     myMainPanel = FormBuilder.createFormBuilder()
@@ -21,6 +22,7 @@ public class AppSettingsComponent {
             .addComponent(switchUndocked, 1) //TODO: sort out what is topInset
             .addComponent(switchDockUnpinned, 1)
             .addComponent(switchFloat, 1)
+            .addComponent(focusOnSwitched, 1)
             .addComponentFillVertically(new JPanel(), 0)
             .getPanel();
   }
@@ -56,6 +58,14 @@ public class AppSettingsComponent {
 
   public void setSwitchFloat(boolean status) {
     switchFloat.setSelected(status);
+  }
+
+  public boolean getFocusOnSwitched() {
+    return focusOnSwitched.isSelected();
+  }
+
+  public void setFocusOnSwitched(boolean status) {
+    focusOnSwitched.setSelected(status);
   }
   // endregion
 }

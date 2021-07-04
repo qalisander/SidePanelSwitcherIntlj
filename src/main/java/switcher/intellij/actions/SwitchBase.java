@@ -9,19 +9,15 @@ import com.intellij.openapi.wm.ToolWindowAnchor;
 import com.intellij.openapi.wm.ToolWindowManager;
 import com.intellij.openapi.wm.ToolWindowType;
 import switcher.intellij.settings.AppSettingsState;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 // TODO: add focus on switched windows add toggle in settings, save last visible in list (What's with folding tw in ui?)
 //  [*]left [*]right [*]bottom tool windows
 // TODO: Add toggle in settings: Whether to remember last opened tool windows; None - show all every time
-// BUG: When pressing button for a while ui freezing. (especially floating windows)
+// BUG: When pressing switch shortcut for a while ui freezing. (especially floating windows)
 
 // NOTE: tool window actions like attaching floating window to border
 // https://alvinalexander.com/java/java-mouse-current-position-location-coordinates/
@@ -96,4 +92,6 @@ public abstract class SwitchBase extends AnAction {
     private void setLastShownToolWindows(List<String> toolWindowIds) {
         AppSettingsState.getInstance().lastShownToolWindows.put(anchor.toString(), toolWindowIds);
     }
+
+    //TODO: last focus tool windows methods
 }

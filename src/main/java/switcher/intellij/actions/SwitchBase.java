@@ -8,6 +8,7 @@ import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowAnchor;
 import com.intellij.openapi.wm.ToolWindowManager;
 import com.intellij.openapi.wm.ToolWindowType;
+import org.jetbrains.annotations.NotNull;
 import switcher.intellij.settings.AppSettingsState;
 import java.util.Arrays;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 public abstract class SwitchBase extends AnAction {
     private static final Logger LOG = Logger.getInstance("SidePanelSwitcher");
+    private static final AppSettingsState settings = AppSettingsState.getInstance();
     protected ToolWindowAnchor anchor;
 
     @Override
@@ -30,13 +32,23 @@ public abstract class SwitchBase extends AnAction {
 
         ToolWindowManager toolWindowManager = ToolWindowManager.getInstance(project);
 
-        List<ToolWindow> toolWindows = Arrays.stream(toolWindowManager.getToolWindowIds())
+        List<ToolWindow> availableToolWindows = Arrays.stream(toolWindowManager.getToolWindowIds())
                 .map(toolWindowManager::getToolWindow)
-                .filter(this::CanBeSwitched)
+                .filter(this::canBeSwitched)
                 .collect(Collectors.toList());
 
-        //TODO: Try hide method
-        List<String> visibleToolWindowIds = toolWindows.stream()
+        List<String> hiddenToolWindowIds = tryHide(availableToolWindows);
+
+        if (hiddenToolWindowIds.size() > 0) {
+            setLastShownToolWindows(hiddenToolWindowIds);
+        } else {
+            show(availableToolWindows);
+        }
+    }
+
+    @NotNull
+    private List<String> tryHide(List<ToolWindow> toolWindows) {
+        return toolWindows.stream()
                 .filter(ToolWindow::isVisible)
                 .map(toolWindow -> {
                     if (LOG.isDebugEnabled()) {
@@ -51,42 +63,37 @@ public abstract class SwitchBase extends AnAction {
                     return toolWindow.getId();
                 })
                 .collect(Collectors.toList());
+    }
 
-        if (visibleToolWindowIds.size() > 0) {
-            setLastShownToolWindows(visibleToolWindowIds);
-        } else {
-            //TODO: Show method
-            List<String> lastShownToolWindowIds = getLastShownToolWindows();
-            String lastFocusedToolWindowId = removeLastFocusedToolWindow();
+    private void show(List<ToolWindow> toolWindows) {
+        List<String> lastShownToolWindowIds = getLastShownToolWindows();
+        String lastFocusedToolWindowId = removeLastFocusedToolWindow();
 
-            for (ToolWindow toolWindow : toolWindows) {
-                if (LOG.isDebugEnabled()) {
-                    LOG.debug("Trying to show window: [" + toolWindow.getId() + "]; on the: [" + anchor.toString() + "] side");
-                }
+        for (ToolWindow toolWindow : toolWindows) {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Trying to show window: [" + toolWindow.getId() + "]; on the: [" + anchor.toString() + "] side");
+            }
 
-                if (!AppSettingsState.getInstance().rememberLastOpened
-                        || lastShownToolWindowIds == null
-                        || lastShownToolWindowIds.size() == 0
-                        || lastShownToolWindowIds.stream().anyMatch(str -> str.equals(toolWindow.getId()))) {
-                    toolWindow.show(null);
-                }
+            if (!settings.rememberLastOpened
+                    || lastShownToolWindowIds == null
+                    || lastShownToolWindowIds.size() == 0
+                    || lastShownToolWindowIds.stream().anyMatch(str -> str.equals(toolWindow.getId()))) {
+                toolWindow.show(null);
+            }
 
-                if (AppSettingsState.getInstance().focusOnSwitched
-                        && toolWindow.getId().equals(lastFocusedToolWindowId)){
-                    toolWindow.activate(null);
-                }
+            if (settings.focusOnSwitched
+                    && toolWindow.getId().equals(lastFocusedToolWindowId)){
+                toolWindow.activate(null);
             }
         }
     }
 
-    private boolean CanBeSwitched(ToolWindow toolWindow) {
+    private boolean canBeSwitched(ToolWindow toolWindow) {
         if (toolWindow == null || toolWindow.getAnchor() != anchor)
             return false;
 
         if (toolWindow.getType() == ToolWindowType.DOCKED && !toolWindow.isAutoHide())
             return true;
-
-        AppSettingsState settings = AppSettingsState.getInstance();
 
         return (settings.switchDockUnpinned && toolWindow.getType() == ToolWindowType.DOCKED && toolWindow.isAutoHide())
                 || (settings.switchUndocked && toolWindow.getType() == ToolWindowType.SLIDING)
@@ -94,18 +101,18 @@ public abstract class SwitchBase extends AnAction {
     }
 
     private List<String> getLastShownToolWindows() {
-        return AppSettingsState.getInstance().lastShownToolWindows.get(anchor.toString());
+        return settings.lastShownToolWindows.get(anchor.toString());
     }
 
     private void setLastShownToolWindows(List<String> toolWindowIds) {
-        AppSettingsState.getInstance().lastShownToolWindows.put(anchor.toString(), toolWindowIds);
+        settings.lastShownToolWindows.put(anchor.toString(), toolWindowIds);
     }
 
     private String removeLastFocusedToolWindow() {
-        return AppSettingsState.getInstance().lastFocusedToolWindow.remove(anchor.toString());
+        return settings.lastFocusedToolWindow.remove(anchor.toString());
     }
 
     private void setLastFocusedToolWindow(String toolWindowId) {
-        AppSettingsState.getInstance().lastFocusedToolWindow.put(anchor.toString(), toolWindowId);
+        settings.lastFocusedToolWindow.put(anchor.toString(), toolWindowId);
     }
 }

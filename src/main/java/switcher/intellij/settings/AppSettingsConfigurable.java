@@ -39,6 +39,7 @@ public class AppSettingsConfigurable implements Configurable {
     boolean modified = mySettingsComponent.getSwitchUndocked() != settings.switchUndocked;
     modified |= mySettingsComponent.getSwitchDockUnpinned() != settings.switchDockUnpinned;
     modified |= mySettingsComponent.getSwitchFloat() != settings.switchFloat;
+    modified |= mySettingsComponent.getFocusOnSwitched() != settings.focusOnSwitched;
     return modified;
   }
 
@@ -48,6 +49,7 @@ public class AppSettingsConfigurable implements Configurable {
     settings.switchUndocked = mySettingsComponent.getSwitchUndocked();
     settings.switchDockUnpinned = mySettingsComponent.getSwitchDockUnpinned();
     settings.switchFloat = mySettingsComponent.getSwitchFloat();
+    settings.focusOnSwitched = mySettingsComponent.getFocusOnSwitched();
   }
 
   @Override
@@ -56,6 +58,7 @@ public class AppSettingsConfigurable implements Configurable {
     mySettingsComponent.setSwitchUndocked(settings.switchUndocked);
     mySettingsComponent.setSwitchDockUnpinned(settings.switchDockUnpinned);
     mySettingsComponent.setSwitchFloat(settings.switchFloat);
+    mySettingsComponent.setFocusOnSwitched(settings.focusOnSwitched);
   }
 
   @Override

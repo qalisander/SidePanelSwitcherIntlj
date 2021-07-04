@@ -38,7 +38,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <applicationConfigurable parentId="tools" instance="switcher.intellij.settings.AppSettingsConfigurable"
                                  id="switcher.intellij.settings.AppSettingsConfigurable"
-                                 displayName="Side Panel Switcher Filter"/>
+                                 displayName="Side Panel Switcher Settings"/>
         <applicationService serviceImplementation="switcher.intellij.settings.AppSettingsState"/>
     </extensions>
 </idea-plugin>

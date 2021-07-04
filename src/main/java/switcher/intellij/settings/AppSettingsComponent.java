@@ -14,7 +14,7 @@ public class AppSettingsComponent {
   private final JBCheckBox switchUndocked = new JBCheckBox("Switch undocked windows");
   private final JBCheckBox switchDockUnpinned = new JBCheckBox("Switch dock unpinned windows");
   private final JBCheckBox switchFloat = new JBCheckBox("Switch float windows");
-  private final JBCheckBox focusOnSwitched = new JBCheckBox("Focus on shown windows (When one of them has been active last time)");
+  private final JBCheckBox focusOnSwitched = new JBCheckBox("Focus on shown windows (one that has been active last time)");
 
   public AppSettingsComponent() {
     myMainPanel = FormBuilder.createFormBuilder()

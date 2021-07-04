@@ -13,9 +13,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
-// TODO: add focus on switched windows add toggle in settings, save last visible in list (What's with folding tw in ui?)
-//  [*]left [*]right [*]bottom tool windows
 // TODO: Add toggle in settings: Whether to remember last opened tool windows; None - show all every time
 // BUG: When pressing switch shortcut for a while ui freezing. (especially floating windows)
 
@@ -27,8 +24,8 @@ public abstract class SwitchBase extends AnAction {
     private static final Logger LOG = Logger.getInstance("SidePanelSwitcher");
     protected ToolWindowAnchor anchor;
 
-    // TODO: rename to action performed
-    protected void switchWindow(AnActionEvent event) {
+    @Override
+    public void actionPerformed(AnActionEvent event) {
         Project project = (Project) event.getDataContext().getData("project");
         if (project == null)
             return;
@@ -60,6 +57,7 @@ public abstract class SwitchBase extends AnAction {
             setLastShownToolWindows(visibleToolWindowIds);
         } else {
             List<String> lastShownToolWindowIds = getLastShownToolWindows();
+            String lastFocusedToolWindowId = removeLastFocusedToolWindow();
 
             for (ToolWindow toolWindow : toolWindows) {
                 if (LOG.isDebugEnabled()) {
@@ -73,7 +71,7 @@ public abstract class SwitchBase extends AnAction {
                 }
 
                 if (AppSettingsState.getInstance().focusOnSwitched
-                        && getLastFocusedToolWindow().equals(toolWindow.getId())){
+                        && toolWindow.getId().equals(lastFocusedToolWindowId)){
                     toolWindow.activate(null);
                 }
             }
@@ -102,8 +100,8 @@ public abstract class SwitchBase extends AnAction {
         AppSettingsState.getInstance().lastShownToolWindows.put(anchor.toString(), toolWindowIds);
     }
 
-    private String getLastFocusedToolWindow() {
-        return AppSettingsState.getInstance().lastFocusedToolWindow.get(anchor.toString());
+    private String removeLastFocusedToolWindow() {
+        return AppSettingsState.getInstance().lastFocusedToolWindow.remove(anchor.toString());
     }
 
     private void setLastFocusedToolWindow(String toolWindowId) {

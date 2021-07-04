@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 // trigger on click and then triger (Window.setLocation()
 
 public abstract class SwitchBase extends AnAction {
-    protected static final Logger LOG = Logger.getInstance("SidePanelSwitcher");
+    private static final Logger LOG = Logger.getInstance("SidePanelSwitcher");
     protected ToolWindowAnchor anchor;
 
     // TODO: rename to action performed
@@ -47,6 +47,10 @@ public abstract class SwitchBase extends AnAction {
                         LOG.debug("Trying to hide window: [" + toolWindow.getId() + "]; on the: [" + anchor.toString() + "] side");
                     }
 
+                    if (toolWindow.isActive()) {
+                        setLastFocusedToolWindow(toolWindow.getId());
+                    }
+
                     toolWindow.hide(null);
                     return toolWindow.getId();
                 })
@@ -66,6 +70,11 @@ public abstract class SwitchBase extends AnAction {
                         || lastShownToolWindowIds.size() == 0
                         || lastShownToolWindowIds.stream().anyMatch(str -> str.equals(toolWindow.getId()))) {
                     toolWindow.show(null);
+                }
+
+                if (AppSettingsState.getInstance().focusOnSwitched
+                        && getLastFocusedToolWindow().equals(toolWindow.getId())){
+                    toolWindow.activate(null);
                 }
             }
         }
@@ -93,5 +102,11 @@ public abstract class SwitchBase extends AnAction {
         AppSettingsState.getInstance().lastShownToolWindows.put(anchor.toString(), toolWindowIds);
     }
 
-    //TODO: last focus tool windows methods
+    private String getLastFocusedToolWindow() {
+        return AppSettingsState.getInstance().lastFocusedToolWindow.get(anchor.toString());
+    }
+
+    private void setLastFocusedToolWindow(String toolWindowId) {
+        AppSettingsState.getInstance().lastFocusedToolWindow.put(anchor.toString(), toolWindowId);
+    }
 }

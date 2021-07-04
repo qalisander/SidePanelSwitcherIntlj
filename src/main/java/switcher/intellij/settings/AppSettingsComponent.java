@@ -14,14 +14,15 @@ public class AppSettingsComponent {
   private final JBCheckBox switchUndocked = new JBCheckBox("Switch undocked windows");
   private final JBCheckBox switchDockUnpinned = new JBCheckBox("Switch dock unpinned windows");
   private final JBCheckBox switchFloat = new JBCheckBox("Switch float windows");
-  private final JBCheckBox focusOnSwitched = new JBCheckBox("Focus on shown windows (last focused window as far as possible)");
+  private final JBCheckBox focusOnSwitched = new JBCheckBox("Focus on shown windows (When one of them has been active last time)");
 
   public AppSettingsComponent() {
     myMainPanel = FormBuilder.createFormBuilder()
-            .addComponent(new JBLabel("Set tool windows filter options:"))
+            .addComponent(new JBLabel("Tool windows filtering options:"))
             .addComponent(switchUndocked, 1) //TODO: sort out what is topInset
             .addComponent(switchDockUnpinned, 1)
             .addComponent(switchFloat, 1)
+            .addComponent(new JBLabel("Other options:"))
             .addComponent(focusOnSwitched, 1)
             .addComponentFillVertically(new JPanel(), 0)
             .getPanel();

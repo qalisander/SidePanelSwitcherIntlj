@@ -33,3 +33,7 @@ for more informations.
 
 ### Features
 - Persistent saving of last shown tool windows
+
+### TODO
+-[ ] Publish to marketplace
+-[ ] Add dark phone for plugin icon

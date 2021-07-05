@@ -37,3 +37,4 @@ for more informations.
 ### TODO
 -[ ] Publish to marketplace
 -[ ] Add dark phone for plugin icon
+-[x] Use DumbAware interface. (when indices are in background update)

@@ -3,6 +3,7 @@ package switcher.intellij.actions;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowAnchor;
@@ -17,9 +18,9 @@ import java.util.stream.Collectors;
 // BUG: When pressing switch shortcut for a while ui freezing. (especially floating windows)
 // NOTE: tool window actions like attaching floating window to border
 // https://alvinalexander.com/java/java-mouse-current-position-location-coordinates/
-// trigger on click and then triger (Window.setLocation()
+// trigger on click and then trigger (Window.setLocation()
 
-public abstract class SwitchBase extends AnAction {
+public abstract class SwitchBase extends AnAction implements DumbAware {
     private static final Logger LOG = Logger.getInstance("SidePanelSwitcher");
     private static final AppSettingsState settings = AppSettingsState.getInstance();
     protected ToolWindowAnchor anchor;

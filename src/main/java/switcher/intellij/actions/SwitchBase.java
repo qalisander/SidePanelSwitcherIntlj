@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+// BUG: when last saved windows in group are empty, switcher doesn't open all
 // BUG: When pressing switch shortcut for a while ui freezing. (especially floating windows)
 // NOTE: tool window actions like attaching floating window to border
 // https://alvinalexander.com/java/java-mouse-current-position-location-coordinates/

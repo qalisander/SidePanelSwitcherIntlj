@@ -1,13 +1,24 @@
 <idea-plugin>
     <!--NOTE: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html-->
     <id>SidePanelSwitcher</id>
-    <name>Switch Auto Hide Mode by Shortcut</name>
+    <name>Side Panel Switcher</name>
     <vendor email="qalisander@gmail.com" url="https://github.com/qalisander/SidePanelSwitcherIntlj">Alisander Qoshqosh</vendor>
-    <description><![CDATA[Switch tool windows auto hide mode of left/right/bottom/top tool window groups by shortcut
-    <p>
-    This is a fork of the https://github.com/dmoebius/intellij-tool-windows-actions
-    </p>]]></description>
-    <version>0.9.1</version>
+    <description><![CDATA[
+    Allows switching visibility of tool window groups associated with left/right/bottom of the ide frame by simple keyboard shortcut.
+    <br/><br/>
+    Shortcuts:
+    <ul>
+       <li>shift + space - switch bottom tool windows</li>
+       <li>shift + F1 - switch right tool windows</li>
+       <li>shift + esc - switch left tool windows</li>
+    </ul>
+    <br/><br/>
+    P.S. To replace default keyboard shortcuts look for "Side Panel Switcher" in intellij ide settings.
+    Filtering and other options available in Tools > Side Panel Switcher Settings.
+    <br/><br/>
+    This is a fork of the https://github.com/dmoebius/intellij-tool-windows-actions and intellij platform adaptation of another popular extension for Microsoft Visual Studio https://marketplace.visualstudio.com/items?itemName=qalisander.SidePanelSwitcher
+    ]]></description>
+    <version>1.0.0</version>
     <idea-version since-build="191" until-build="221.*"/>
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>

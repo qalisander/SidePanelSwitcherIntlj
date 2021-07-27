@@ -1,40 +1,35 @@
-IntelliJ Tool Windows Actions Plugin
+Side Panel Switcher
 ====================================
 
-This IntelliJ plugin adds just one action to IntelliJ:
-- **Hide Bottom Tool Windows** (Ctrl+ESC) \
-  Hides all bottom tool windows at once.
-  
-The plugin should work on all IDEA applications, ie. PyCharm, Resharper
-etc., but only IntelliJ IDEA has been tested.
+Allows switching visibility of tool window groups associated with left/right/bottom of the ide frame by simple keyboard shortcut.
 
-This plugin is a fork of the [SimpleActions plugin](https://plugins.jetbrains.com/plugin/207-simpleactions/)
-by Etienne Studer. It has exactly the same action, but it also bundles
-some other actions, which don't work anymore and produce errors. It's
-not maintained anymore.
+Default shortcuts:
+- `shift + space` - switch bottom tool windows
+- `shift + F1` - switch right tool windows
+- `shift + esc` - switch left tool windows
 
-### Build & test
+This is a fork of the [intellij-tool-windows-actions](https://github.com/dmoebius/intellij-tool-windows-actions) and intellij platform adaptation of another [popular extension](https://marketplace.visualstudio.com/items?itemName=qalisander.SidePanelSwitcher) for Microsoft Visual Studio.
 
-`./gradlew runIde`
+The plugin should work on all IDEA apps. 
+Tested in IntelliJ IDEA, PyCharm, Rider, CLion, DataGrip.
 
-### Publish plugin
+### How and Why
+Sometimes it's convenient to group tool windows of a same purpose on single side of ide frame (like project files, file structure, bookmarks on the left, precommit tool window, vcs history on the right, everything related to debugging on the bottom).
 
-`./gradlew publishPlugin`
+But there's no default way in ide to show/hide all windows in group simultaneously.
+So here is the extension may help and especially helpful when you have some extra space on your screen just like myself (ultrawide monitor).
 
-but you'll need a deploy key, aka "Jetbrains Hub permanent token".
-Add file `gradle.properties` to the project's root with content:
-```
-intellijPublishToken=<your-token>
-```
-Don't commit this file!
-
-See [Publishing Plugins with Gradle](https://www.jetbrains.org/intellij/sdk/docs/tutorials/build_system/deployment.html#providing-your-hub-permanent-token-to-gradle)
-for more informations.
+![Usage example](switch-demo.gif)
 
 ### Features
+- Filtering by undocked/dock unpinned/float tool windows
+- Focusing on last focused tool window next after showing tool window group
 - Persistent saving of last shown tool windows
+  
+Filtering and other options available in `Tools > Side Panel Switcher Settings`.
 
-### TODO
--[ ] Publish to marketplace
--[ ] Add dark phone for plugin icon
--[x] Use DumbAware interface. (when indices are in background update)
+![Ide Settings](ide-settings.jpg)
+
+This is a fork of the [intellij-tool-windows-actions extension](https://github.com/dmoebius/intellij-tool-windows-actions) and intellij platform adaptation of another [popular extension](https://marketplace.visualstudio.com/items?itemName=qalisander.SidePanelSwitcher) for Microsoft Visual Studio
+
+Any help with bug reports or PR's is appreciated.

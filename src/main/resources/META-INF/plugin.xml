@@ -19,7 +19,7 @@
     This is a fork of the https://github.com/dmoebius/intellij-tool-windows-actions and intellij platform adaptation of another popular extension for Microsoft Visual Studio https://marketplace.visualstudio.com/items?itemName=qalisander.SidePanelSwitcher
     ]]></description>
     <version>1.0.0</version>
-    <idea-version since-build="191" until-build="221.*"/>
+    <idea-version since-build="191" until-build="100500.*"/>
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
     <actions>

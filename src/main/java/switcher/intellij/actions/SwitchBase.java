@@ -15,12 +15,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// BUG: when last saved windows in group are empty, switcher doesn't open all
-// BUG: When pressing switch shortcut for a while ui freezing. (especially floating windows)
-// NOTE: tool window actions like attaching floating window to border
-// https://alvinalexander.com/java/java-mouse-current-position-location-coordinates/
-// trigger on click and then trigger (Window.setLocation()
-
 public abstract class SwitchBase extends AnAction implements DumbAware {
     private static final Logger LOG = Logger.getInstance("SidePanelSwitcher");
     private static AppSettingsState settings() { return AppSettingsState.getInstance(); }
@@ -28,7 +22,7 @@ public abstract class SwitchBase extends AnAction implements DumbAware {
 
     @Override
     public void actionPerformed(AnActionEvent event) {
-        Project project = (Project) event.getDataContext().getData("project");
+        Project project = event.getProject();
         if (project == null)
             return;
 
@@ -41,7 +35,7 @@ public abstract class SwitchBase extends AnAction implements DumbAware {
 
         List<String> hiddenToolWindowIds = tryHide(availableToolWindows);
 
-        if (hiddenToolWindowIds.size() > 0) {
+        if (!hiddenToolWindowIds.isEmpty()) {
             setLastShownToolWindows(hiddenToolWindowIds);
         } else {
             show(availableToolWindows);
@@ -78,7 +72,7 @@ public abstract class SwitchBase extends AnAction implements DumbAware {
 
             if (!settings().rememberLastOpened
                     || lastShownToolWindowIds == null
-                    || lastShownToolWindowIds.size() == 0
+                    || lastShownToolWindowIds.isEmpty()
                     || lastShownToolWindowIds.stream().anyMatch(str -> str.equals(toolWindow.getId()))) {
                 toolWindow.show(null);
             }

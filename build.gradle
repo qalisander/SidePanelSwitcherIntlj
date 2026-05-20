@@ -1,36 +1,54 @@
 plugins {
     id 'java'
-    id 'org.jetbrains.intellij' version '0.4.10'
+    id 'org.jetbrains.intellij.platform' version '2.16.0'
 }
 
 group 'switcher.intellij'
-version '1.0.0'
+version '1.0.3'
 
-sourceCompatibility = 1.8
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
 
 repositories {
     mavenCentral()
+    intellijPlatform {
+        defaultRepositories()
+    }
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    intellijPlatform {
+        intellijIdeaCommunity('2026.1.2') {
+            useInstaller = false
+        }
+        jetbrainsRuntime()
+    }
+    testImplementation 'junit:junit:4.13.2'
 }
 
-// See https://github.com/JetBrains/gradle-intellij-plugin/
+// See https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin.html
 // https://plugins.jetbrains.com/docs/intellij/publishing-plugin.html#publishing-to-the-jetbrains-plugins-repository
 // https://plugins.jetbrains.com/docs/intellij/deployment.html#using-environment-variables
-intellij {
-    version '2020.2.4'
-}
-patchPluginXml {
-    sinceBuild '191'
-    untilBuild '221.*'
-    changeNotes """
-      <dl>
-        <dt>Version 1.0.0</dt>
-      </dl>"""
-}
-publishPlugin {
-    channels = ['beta']
-    token = System.getenv("ORG_GRADLE_PROJECT_intellijPublishToken")
+intellijPlatform {
+    pluginConfiguration {
+        version = project.version
+        ideaVersion {
+            sinceBuild = '261'
+            untilBuild = provider { null }
+        }
+        changeNotes = """
+          <dl>
+            <dt>Version 1.0.3</dt>
+            <dd>Compatibility with IntelliJ IDEA 2026.1.x.</dd>
+            <dd>Removed upper IDE version bound — plugin now loads in all future IntelliJ builds &ge; 2026.1.</dd>
+            <dd>Fix SwitchBase class initialization error: fetch AppSettingsState on-demand instead of in a static field, avoiding a &lt;clinit&gt; failure during keymap lookup (<a href="https://github.com/qalisander/SidePanelSwitcherIntlj/pull/1">#1</a>, thanks @Sun-Phil-Kwon-Miro).</dd>
+          </dl>"""
+    }
+    publishing {
+        channels = ['default']
+        token = providers.environmentVariable('ORG_GRADLE_PROJECT_intellijPublishToken')
+    }
 }

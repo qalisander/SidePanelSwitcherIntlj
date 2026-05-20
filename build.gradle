@@ -48,7 +48,7 @@ intellijPlatform {
           </dl>"""
     }
     publishing {
-        channels = ['beta']
+        channels = ['default']
         token = providers.environmentVariable('ORG_GRADLE_PROJECT_intellijPublishToken')
     }
 }

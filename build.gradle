@@ -37,12 +37,13 @@ intellijPlatform {
         version = project.version
         ideaVersion {
             sinceBuild = '261'
-            untilBuild = '261.*'
+            untilBuild = provider { null }
         }
         changeNotes = """
           <dl>
             <dt>Version 1.0.3</dt>
             <dd>Compatibility with IntelliJ IDEA 2026.1.x.</dd>
+            <dd>Removed upper IDE version bound — plugin now loads in all future IntelliJ builds &ge; 2026.1.</dd>
             <dd>Fix SwitchBase class initialization error: fetch AppSettingsState on-demand instead of in a static field, avoiding a &lt;clinit&gt; failure during keymap lookup (<a href="https://github.com/qalisander/SidePanelSwitcherIntlj/pull/1">#1</a>, thanks @Sun-Phil-Kwon-Miro).</dd>
           </dl>"""
     }

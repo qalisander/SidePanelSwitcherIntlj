@@ -1,36 +1,51 @@
 plugins {
     id 'java'
-    id 'org.jetbrains.intellij' version '0.4.10'
+    id 'org.jetbrains.intellij.platform' version '2.16.0'
 }
 
 group 'switcher.intellij'
 version '1.0.0'
 
-sourceCompatibility = 1.8
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
 
 repositories {
     mavenCentral()
+    intellijPlatform {
+        defaultRepositories()
+    }
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    intellijPlatform {
+        intellijIdeaCommunity('2026.1.2') {
+            useInstaller = false
+        }
+        jetbrainsRuntime()
+    }
+    testImplementation 'junit:junit:4.13.2'
 }
 
-// See https://github.com/JetBrains/gradle-intellij-plugin/
+// See https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin.html
 // https://plugins.jetbrains.com/docs/intellij/publishing-plugin.html#publishing-to-the-jetbrains-plugins-repository
 // https://plugins.jetbrains.com/docs/intellij/deployment.html#using-environment-variables
-intellij {
-    version '2020.2.4'
-}
-patchPluginXml {
-    sinceBuild '191'
-    untilBuild '221.*'
-    changeNotes """
-      <dl>
-        <dt>Version 1.0.0</dt>
-      </dl>"""
-}
-publishPlugin {
-    channels = ['beta']
-    token = System.getenv("ORG_GRADLE_PROJECT_intellijPublishToken")
+intellijPlatform {
+    pluginConfiguration {
+        version = project.version
+        ideaVersion {
+            sinceBuild = '261'
+            untilBuild = '261.*'
+        }
+        changeNotes = """
+          <dl>
+            <dt>Version 1.0.0</dt>
+          </dl>"""
+    }
+    publishing {
+        channels = ['beta']
+        token = providers.environmentVariable('ORG_GRADLE_PROJECT_intellijPublishToken')
+    }
 }

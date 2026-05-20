@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'switcher.intellij'
-version '1.0.0'
+version '1.0.3'
 
 java {
     toolchain {
@@ -41,7 +41,9 @@ intellijPlatform {
         }
         changeNotes = """
           <dl>
-            <dt>Version 1.0.0</dt>
+            <dt>Version 1.0.3</dt>
+            <dd>Compatibility with IntelliJ IDEA 2026.1.x.</dd>
+            <dd>Fix SwitchBase class initialization error: fetch AppSettingsState on-demand instead of in a static field, avoiding a &lt;clinit&gt; failure during keymap lookup (<a href="https://github.com/qalisander/SidePanelSwitcherIntlj/pull/1">#1</a>, thanks @Sun-Phil-Kwon-Miro).</dd>
           </dl>"""
     }
     publishing {

@@ -28,7 +28,7 @@ public abstract class SwitchBase extends AnAction implements DumbAware {
 
     @Override
     public void actionPerformed(AnActionEvent event) {
-        Project project = (Project) event.getDataContext().getData("project");
+        Project project = event.getProject();
         if (project == null)
             return;
 
@@ -41,7 +41,7 @@ public abstract class SwitchBase extends AnAction implements DumbAware {
 
         List<String> hiddenToolWindowIds = tryHide(availableToolWindows);
 
-        if (hiddenToolWindowIds.size() > 0) {
+        if (!hiddenToolWindowIds.isEmpty()) {
             setLastShownToolWindows(hiddenToolWindowIds);
         } else {
             show(availableToolWindows);
@@ -78,7 +78,7 @@ public abstract class SwitchBase extends AnAction implements DumbAware {
 
             if (!settings().rememberLastOpened
                     || lastShownToolWindowIds == null
-                    || lastShownToolWindowIds.size() == 0
+                    || lastShownToolWindowIds.isEmpty()
                     || lastShownToolWindowIds.stream().anyMatch(str -> str.equals(toolWindow.getId()))) {
                 toolWindow.show(null);
             }

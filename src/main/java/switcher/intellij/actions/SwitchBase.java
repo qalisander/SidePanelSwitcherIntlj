@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 public abstract class SwitchBase extends AnAction implements DumbAware {
     private static final Logger LOG = Logger.getInstance("SidePanelSwitcher");
-    private static final AppSettingsState settings = AppSettingsState.getInstance();
+    private static AppSettingsState settings() { return AppSettingsState.getInstance(); }
     protected ToolWindowAnchor anchor;
 
     @Override
@@ -76,14 +76,14 @@ public abstract class SwitchBase extends AnAction implements DumbAware {
                 LOG.debug("Trying to show window: [" + toolWindow.getId() + "]; on the: [" + anchor.toString() + "] side");
             }
 
-            if (!settings.rememberLastOpened
+            if (!settings().rememberLastOpened
                     || lastShownToolWindowIds == null
                     || lastShownToolWindowIds.size() == 0
                     || lastShownToolWindowIds.stream().anyMatch(str -> str.equals(toolWindow.getId()))) {
                 toolWindow.show(null);
             }
 
-            if (settings.focusOnSwitched
+            if (settings().focusOnSwitched
                     && toolWindow.getId().equals(lastFocusedToolWindowId)){
                 toolWindow.activate(null);
             }
@@ -97,24 +97,24 @@ public abstract class SwitchBase extends AnAction implements DumbAware {
         if (toolWindow.getType() == ToolWindowType.DOCKED && !toolWindow.isAutoHide())
             return true;
 
-        return (settings.switchDockUnpinned && toolWindow.getType() == ToolWindowType.DOCKED && toolWindow.isAutoHide())
-                || (settings.switchUndocked && toolWindow.getType() == ToolWindowType.SLIDING)
-                || (settings.switchFloat && toolWindow.getType() == ToolWindowType.FLOATING);
+        return (settings().switchDockUnpinned && toolWindow.getType() == ToolWindowType.DOCKED && toolWindow.isAutoHide())
+                || (settings().switchUndocked && toolWindow.getType() == ToolWindowType.SLIDING)
+                || (settings().switchFloat && toolWindow.getType() == ToolWindowType.FLOATING);
     }
 
     private List<String> getLastShownToolWindows() {
-        return settings.lastShownToolWindows.get(anchor.toString());
+        return settings().lastShownToolWindows.get(anchor.toString());
     }
 
     private void setLastShownToolWindows(List<String> toolWindowIds) {
-        settings.lastShownToolWindows.put(anchor.toString(), toolWindowIds);
+        settings().lastShownToolWindows.put(anchor.toString(), toolWindowIds);
     }
 
     private String removeLastFocusedToolWindow() {
-        return settings.lastFocusedToolWindow.remove(anchor.toString());
+        return settings().lastFocusedToolWindow.remove(anchor.toString());
     }
 
     private void setLastFocusedToolWindow(String toolWindowId) {
-        settings.lastFocusedToolWindow.put(anchor.toString(), toolWindowId);
+        settings().lastFocusedToolWindow.put(anchor.toString(), toolWindowId);
     }
 }
